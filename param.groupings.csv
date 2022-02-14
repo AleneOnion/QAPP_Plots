@@ -1,0 +1,60 @@
+category,CHARACTERISTIC_NAME,simple
+HABs_Parameters,ANATOXIN-A,anatoxin
+HABs_Parameters,BMAA (BETA-METHYL-AMINO-(L)-ALANINE),bmaa
+HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CHLOROPHYTE (GREEN ALGAE)","chla(probe,greens)"
+HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CHRYSOPHYTA (BROWN ALGAE)","chla(probe,browns)"
+HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CRYPTOPHYTA (CRYPTOPHYTES)","chla(probe,cryps)"
+HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CYANOBACTERIA (BLUEGREEN)","chla(probe,bg)"
+HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, DINOPHYTA (DIATOMS)","chla(probe,diatoms)"
+HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, TOTAL",chla(total)
+HABs_Parameters,CYLINDROSPERMOPSIN,cylind
+HABs_Parameters,MICROCYSTIN,microcystin
+HABs_Parameters,MICROCYSTIN DLA,microcystin (DLA)
+HABs_Parameters,MICROCYSTIN DLR,microcystin (DLR)
+HABs_Parameters,MICROCYSTIN LA,microcystin (LA)
+HABs_Parameters,MICROCYSTIN LR,microcystin (LR)
+HABs_Parameters,MICROCYSTIN MLR,microcystin (MLR)
+HABs_Parameters,MICROCYSTIN RR,microcystin (RR)
+HABs_Parameters,MICROCYSTIN YR,microcystin (YR)
+HABs_Parameters,PHYCOCYANIN,phycocyanin
+In_Situ_Parameters,CHLOROPHYLL A (PROBE),chla(probe)
+In_Situ_Parameters,DISSOLVED OXYGEN,DO
+In_Situ_Parameters,DISSOLVED OXYGEN SATURATION,DOsat
+In_Situ_Parameters,OXIDATION REDUCTION POTENTIAL (ORP),ORP
+In_Situ_Parameters,PH,ph
+In_Situ_Parameters,PHYCOCYANIN (PROBE),phycocyanin (probe)
+In_Situ_Parameters,TEMPERATURE,temperature
+In_Situ_Parameters,TURBIDITY,turbidity
+Minerals,"ALKALINITY, TOTAL (AS CACO3)",alkalinity
+Metals,ALUMINUM,aluminum
+Metals,ARSENIC,arsenic
+Minerals,CALCIUM,calcium
+Metals,COPPER,copper
+Minerals,FLUORIDE,fluoride
+Minerals,HARDNESS (AS CACO3),hardness
+Metals,IRON,iron
+Metals,MAGNESIUM,magnesium
+Metals,MANGANESE,manganese
+Metals,POTASSIUM,potassium
+Minerals,SILICA,silica
+Minerals,SULFATE (AS SO4),sulfate
+Other_Nutrient_Parameters,"CARBON, DISSOLVED ORGANIC (DOC)",DOC
+Other_Nutrient_Parameters,"CARBON, TOTAL ORGANIC",TOC
+Other_Nutrient_Parameters,"NITROGEN, AMMONIA (AS N)",ammonia
+Other_Nutrient_Parameters,"NITROGEN, KJELDAHL, TOTAL",TKN
+Other_Nutrient_Parameters,"NITROGEN, NITRATE-NITRITE",nitrate-nitrite
+Other_Nutrient_Parameters,"NITROGEN, NITRATE (AS N)",nitrate
+Other_Nutrient_Parameters,"NITROGEN, NITRITE",nitrite
+Other_Nutrient_Parameters,"NITROGEN, TOTAL DISSOLVED",TN diss
+Other_Nutrient_Parameters,"PHOSPHORUS, DISSOLVED",TP diss
+Other_Parameters,"ACIDITY, HYDROGEN ION (H+)",acidity
+Other_Nutrient_Parameters,UV 254,uv254
+Salt_Parameters,CHLORIDE,chloride
+Salt_Parameters,SODIUM,sodium
+Salt_Parameters,SPECIFIC CONDUCTANCE,sp.cond
+Trophic_Parameters,APPARENT COLOR,apparent color
+Trophic_Parameters,CHLOROPHYLL A,chla
+Trophic_Parameters,"DEPTH, SECCHI DISK DEPTH",secchi
+Trophic_Parameters,"NITROGEN, TOTAL",TN
+Trophic_Parameters,"PHOSPHORUS, TOTAL",TP
+Trophic_Parameters,TRUE COLOR,true color

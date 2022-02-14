@@ -1,0 +1,172 @@
+---
+title: "QAPP_Plots"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#  {.tabset}
+
+## Data set
+
+plots for the 2022 lci qapp
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+#merging lake id with the DOH ID
+library(tidyverse)
+rm(list=setdiff(ls(), c("newdata")))
+# setwd("C:/Users/leneo/Dropbox/Alene/Rscripts/Current")
+# source("new_database/Reading.LMAS.Data.R")
+# setwd("C:/Users/leneo/Dropbox/Alene/Rscripts/QAPP_Plots")
+
+lci<-newdata %>% filter(DATA_PROVIDER=="LCI",
+                        SAMPLE_TYPE=="WATER COLUMN") %>% 
+  mutate(year=substr(SAMPLE_DATE,1,4),
+         class=ifelse(grepl("A",LOCATION_WATERBODY_CLASSIFICATION),"A","B"),
+         info=INFORMATION_TYPE,
+         param=CHARACTERISTIC_NAME) %>% 
+  group_by(param,year) %>% 
+  mutate(core=ifelse(length(unique(SAMPLE_DATE))>5,"yes","no")) %>% 
+  ungroup() %>% 
+  #remove miscategoriezed depth profile data
+  mutate(info=ifelse(info=='DP'&RSLT_RESULT_TYPE=='LAB',NA,info)) %>% 
+  filter(!is.na(info)) %>% 
+  select(year,param,info,class,core,RSLT_RESULT_SAMPLE_FRACTION) %>% distinct() %>% arrange(year,param)
+
+#preserve list of parameters that aren't core (meaning sampled < 5x/year)
+lci_not_core_params<-lci %>% filter(core=="no")
+lci<-lci %>% filter(core=="yes") %>% select(-core)
+
+#add in param groupings and remove those without groupings because not important
+param_groups<-read.csv("param.groupings.csv")
+param_groups<-param_groups %>% rename(param=CHARACTERISTIC_NAME)
+lci<-merge(lci,param_groups,by=c('param'),all.x=TRUE)
+lci<-lci %>% filter(!is.na(category))
+
+
+```
+
+plot of parameter history
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+library(ggplot2)
+
+salts<-lci %>% filter(category=="Salt_Parameters") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("Salt Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+
+
+```
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="Metals",
+                      RSLT_RESULT_SAMPLE_FRACTION=="TOTAL") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("Total Metals Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="Metals",
+                      RSLT_RESULT_SAMPLE_FRACTION=="DISSOLVED") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("Dissolved Metals Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="Minerals") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("Minerals Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
+
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="Trophic_Parameters") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("Trophic Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="Other_Nutrient_Parameters") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("Other Nutrient Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
+
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="In_Situ_Parameters") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("In Situ Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
+
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+salts<-lci %>% filter(category=="HABs_Parameters") %>% 
+  mutate(layer_class=paste(info,class,sep="_"))
+
+ggplot(salts,
+       aes(x = simple,y = year)) + 
+  geom_point(aes(colour = layer_class,
+                 group = layer_class),
+             position = position_dodge(width = 0.25))+
+  ggtitle("HABs Parameters")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())
+```
