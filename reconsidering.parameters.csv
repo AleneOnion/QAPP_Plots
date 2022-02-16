@@ -1,0 +1,92 @@
+consider,category,CHARACTERISTIC_NAME,simple,RSLT_RESULT_SAMPLE_FRACTION,wqs_use, cost ,justification other than wqs,Redox sensitive,which study,DP,OW,BS,A,B,level justification
+already sample,HABs_Parameters,ANATOXIN-A,anatoxin,,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,BMAA (BETA-METHYL-AMINO-(L)-ALANINE),bmaa,,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CHLOROPHYTE (GREEN ALGAE)","chla(probe,greens)",,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CHRYSOPHYTA (BROWN ALGAE)","chla(probe,browns)",,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CRYPTOPHYTA (CRYPTOPHYTES)","chla(probe,cryps)",,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, CYANOBACTERIA (BLUEGREEN)","chla(probe,bg)",,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, DINOPHYTA (DIATOMS)","chla(probe,diatoms)",,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,"CHLOROPHYLL A (PROBE) CONCENTRATION, TOTAL",chla(total),,no wqs,200,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,CYLINDROSPERMOPSIN,cylind,,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN,microcystin,,no wqs,125,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN DLA,microcystin (DLA),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN DLR,microcystin (DLR),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN LA,microcystin (LA),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN LR,microcystin (LR),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN MLR,microcystin (MLR),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN RR,microcystin (RR),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,MICROCYSTIN YR,microcystin (YR),,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,HABs_Parameters,PHYCOCYANIN,phycocyanin,,no wqs,0,hab parameter,,random probabilistic,,1,,1,1,
+already sample,In_Situ_Parameters,PHYCOCYANIN (PROBE),phycocyanin(probe),,no wqs,0,hab parameter,,random probabilistic,1,,,1,1,
+already sample,In_Situ_Parameters,CHLOROPHYLL A (PROBE),chla(probe),,no wqs,0,generally characterize waterbody,,,1,,,1,1,
+already sample,In_Situ_Parameters,DISSOLVED OXYGEN,DO,,all,0,WQS,,,1,,,1,1,
+already sample,In_Situ_Parameters,DISSOLVED OXYGEN SATURATION,DOsat,,all,0,generally characterize waterbody,,,1,,,1,1,
+already sample,In_Situ_Parameters,OXIDATION REDUCTION POTENTIAL (ORP),ORP,,no wqs,0,generally characterize waterbody,,,1,,,1,1,
+already sample,In_Situ_Parameters,PH,ph,,all,0,WQS,,,1,,,1,1,
+already sample,In_Situ_Parameters,TEMPERATURE,temperature,,no wqs,0,generally characterize waterbody - climate change impacts,,,1,,,1,1,
+x,Metals,ALUMINUM,aluminum (D),DISSOLVED,fishing,8,"WQS (streams: 29% non-detect, 5% excursions)",x,,,1,1,1,1,
+x,Metals,ARSENIC,arsenic (D),DISSOLVED,fishing,8,"WQS (streams: 62.5% non-detect, 0 excursions)",x,,,1,1,1,1,currently measure both but 76% of the time higher in the hyp (not redox active)
+already sample,Metals,ARSENIC,arsenic (T),TOTAL,source of water supply,8,WQS,x,,,1,1,1,,"currently measure both but 76% of the time higher in the hyp, anoxic form is more toxic"
+x,Metals,COPPER,copper (D),DISSOLVED,fishing,8,"WQS (streams: 2.5% non-detect, 7% excursion)",x,,,1,1,1,1,common algicide
+x,Metals,COPPER,copper (T),TOTAL,source of water supply,8,WQS,x,,,1,1,1,,common algicide
+already sample,Metals,IRON,iron,TOTAL,source of water supply,5,WQS,x,,,1,1,1,1,currently measure both but 95% of the time higher in the hyp
+already sample,Metals,MAGNESIUM,magnesium,TOTAL,source of water supply,5,WQS,x,,,1,1,1,1,currently measure both but 71% of the time higher in the hyp
+already sample,Metals,MANGANESE,manganese,TOTAL,source of water supply,5,WQS,x,,,1,1,1,1,currently measure both but 96% of the time higher in the hyp
+x,Metals,NICKEL,nickel (D),DISSOLVED,fishing,5,"WQS (streams: 4% non-detect, 5% excursions)",x,,,1,1,1,1,
+x,Metals,NICKEL,nicekl (T),TOTAL,source of water supply,5,WQS bedrock and industrial sources,x,,,1,1,1,,?
+x,Metals,ZINC,zinc (D),DISSOLVED,fishing,8,"WQS (streams: 13% non-detects, 14% excursions)",x,,,1,1,1,1,?
+already sample,Minerals,"ALKALINITY, TOTAL (AS CACO3)",alkalinity,TOTAL,no wqs,14,generally characterize waterbody - buffering capacity of the carbonate system in the water,x,,,1,1,1,1,currently measure both but 73 of the time higher in the hyp
+already sample,Minerals,CALCIUM,calcium,TOTAL,no wqs,5,geenrally characterize waterbodyvulnerability to zebra mussels,,,,1,1,1,1,currently measure both but 59% of the time higher in the hyp
+? - lit search,Minerals,FLUORIDE,fluoride,TOTAL,fishing; source of water supply,11,"WQS (streams: 73% non detects, 0.01% excursions), backround conditions are on average 1/32 the levels of chloride (Wetzel 2003)",,,,1,1,1,1,
+already sample,Minerals,HARDNESS (AS CACO3),hardness,TOTAL,used to calculate other parameters,14,"WQS calcs and generally characterize waterbody - concentration of metal ions (primarily calcium and magnesium) expressed in mg/l of equivalent calcium carbonate. Usually but not always similar to alkalinity because because calcium, magnesium, bicarbonate, and carbonate ions in water are derived in equivalent quantities from the solution of limestone in geological deposits",,,,1,1,1,1," wherever Fluoride, Cadmium,Copper,Lead,Nickel,Zinc is measured"
+?,Minerals,SILICA,silica,TOTAL,no wqs,35,generally characterize waterbody - diatom growth but $$$,,,,1,1,1,1,diatom growth
+already sample,Minerals,SULFATE (AS SO4),sulfate,TOTAL,source of water supply,11,WQS - primarily contributed by oxidation of iron sulfides,x,,,1,1,1,1,equally prevelant in both layers
+already sample,Other_Nutrient_Parameters,"CARBON, DISSOLVED ORGANIC (DOC)",DOC,DISSOLVED,no wqs,15,generally characterize waterbody - a measure of productivity and used to calculate SUVA (UV254/DOC) a measure of disinfection byproduct potential,x,,,1,1,1,1,currently measure both but 62% higher in the epilimnion
+already sample,Other_Nutrient_Parameters,"CARBON, TOTAL ORGANIC",TOC,TOTAL,no wqs,15,generally characterize waterbody - a measure of productivity,x,,,1,1,1,1,currently measure both but 62% higher in the epilimnion
+already sample,Other_Nutrient_Parameters,"NITROGEN, AMMONIA (AS N)",ammonia,TOTAL,fishing; source of water supply,13,WQS,x,,,1,1,1,1,currently measure both but 88% of the time higher in the hyp
+already sample,Other_Nutrient_Parameters,"NITROGEN, KJELDAHL, TOTAL",TKN,TOTAL,no wqs,17,generally characterize waterbody - nutrient levels,x,,,1,1,1,1,nutrients
+already sample,Other_Nutrient_Parameters,"NITROGEN, NITRATE (AS N)",nitrate,TOTAL,source of water supply,0,WQS and generally characterize waterbody - nutrient levels,x,,,1,1,1,1,nutrients
+already sample,Other_Nutrient_Parameters,"NITROGEN, NITRATE-NITRITE",nitrate-nitrite,TOTAL,source of water supply,13,WQS and generally characterize waterbody - nutrient levels,x,,,1,1,1,1,nutrients
+already sample,Other_Nutrient_Parameters,"NITROGEN, NITRITE",nitrite,TOTAL,fishing; source of water supply,13,WQS and generally characterize waterbody - nutrient levels,x,,,1,1,1,1,nutrients
+already sample,Other_Nutrient_Parameters,"PHOSPHORUS, DISSOLVED",TP diss,DISSOLVED,no wqs,14,generally characterize waterbody - nutrient levels,x,,,1,1,1,1,nutrients
+x,Other_Nutrient_Parameters,TOTAL DISSOLVED SOLIDS,total_dissolved_solids,DISSOLVED,all,10,WQS (composed of salts and DOM),,,,1,1,1,1,influence of TOC
+already sample,Other_Nutrient_Parameters,UV 254,uv254,TOTAL,no wqs,22,important for water_supply use - used to calculate SUVA (UV254/DOC) a measure of disinfection byproduct potential4,,,,1,1,1,,source water impacts
+already sample,Salt_Parameters,CHLORIDE,chloride,TOTAL,source of water supply,11,WQS and Road Salt Impacts,,,,1,1,1,1,examin impacts to aquatic life and stratification
+x,Salt_Parameters,SODIUM,sodium,TOTAL,no wqs,5,generally characterize waterbody - road salt indicator,,,,1,1,1,1, like chloride
+already sample,Salt_Parameters,SPECIFIC CONDUCTANCE,sp.cond,,no wqs,0,generally characterize waterbody - road salt indicator,,,1,,,1,1,
+already sample,Trophic_Parameters,CHLOROPHYLL A,chla,TOTAL,no wqs,60,generally characterize waterbody - trophic condition,,,,1,,1,1,
+already sample,Trophic_Parameters,"DEPTH, SECCHI DISK DEPTH",secchi,,no wqs,0,generally characterize waterbody - trophic condition,,,,1,,1,1,
+already sample,Trophic_Parameters,"NITROGEN, TOTAL",TN,TOTAL,no wqs,0,generally characterize waterbody - nutrient levels,x,,,1,1,1,1,nutrients
+already sample,Trophic_Parameters,"PHOSPHORUS, TOTAL",TP,TOTAL,all,14,WQS and generally characterize waterbody - trophic condition,x,,,1,1,1,1,nutrients
+already sample,Trophic_Parameters,TRUE COLOR,true color,TOTAL,no wqs,7,generally characterize waterbody - trophic condition,,,,1,1,1,1,since the main concern is impact to the photic zone
+? - too many non-detects,,,lead,dissolved,fishing,8,"streams: 89% non-detect, 6% excursion, road run off and atmospheric deposition",,,,,,,,?
+? - too many non-detects,,,lead,total,source of water supply,8,road run off and atmospheric deposition,,,,,,,,?
+? - too many non-detects,,,cadmium,dissolved,fishing,,"streams: 90% non-detect, 6% excurions",,,,,,,,
+? - too many non-detects,,,cadmium,total,source of water supply,,,,,,,,,,
+x,,,ANC,,no wqs,,not in ALS. generally characterize waterbody - examine impacts of acid rain - measures the capacity of the water to neutralize strong inorganic acids. Different from Alkalinity in that it is measured in unfiltered water where as alkalinity is measured in filtered,,,,,,,,
+x,,,cdom,,no wqs,,not in ALS. generally characterize waterbody - a measure of ,x,,,,,,,
+already sample,,,DOMINANT ALGAL SPECIES,,no wqs,,hab parameter,,random probabilistic,,,,,,
+x - harvest not collect,,,fecal_coliforms,,all,,,,,,,,,,
+x - harvest not collect,,,total_coliform,,fishing; secondary contact recreation; primary contact recreation,,no price from Als,,,1,,,1,1,epi
+? - too many non-detects,,,mercury,total,source of water supply,18,"streams: 99.5% non-detect, no excursions",,,,,,,,?
+? - too many non-detects,,,mercury,dissolved,fishing,18,"streams: 99.5% non-detect, no excursions",,,,,,,,?
+? - too many non-detects,,,silver,total,source of water supply,5,,,,,,,,,?
+? - too many non-detects,,,silver,dissolved,fishing,5,"streams: 99% non-detect, no excursions",,,,,,,,?
+,,,1_2_xylene,total,,,,,,,,,,,
+,,,1_3_xylene,total,,,,,,,,,,,
+,,,1_4_dioxane,total,,,,,,,,,,,
+,,,1_4_xylene,total,,,,,,,,,,,
+,,,benzene,total,,,,,,,,,,,
+,,,boron,total,,,,,,,,,,,
+,,,bromodichloromethane,total,,,,,,,,,,,
+,,,bromoform,total,,,,,,,,,,,
+,,,chloroform,total,,,,,,,,,,,
+,,,dibromochloromethane,total,,,,,,,,,,,
+,,,ethylbenzene,total,,,,,,,,,,,
+,,,pfoa,total,,,,,,,,,,,
+,,,pfos,total,,,,,,,,,,,
+,,,pfos,total,,,,,,,,,,,
+,,,phenolic_compounds,total,,,,,,,,,,,
+,,,phenols,total,,,,,,,,,,,
+,,,silver_acid-soluble,dissolved,,,,,,,,,,,
+,,,sum_1_2_3_4_xylene,total,,,,,,,,,,,

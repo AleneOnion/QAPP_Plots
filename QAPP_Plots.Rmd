@@ -40,11 +40,28 @@ lci_not_core_params<-lci %>% filter(core=="no")
 lci<-lci %>% filter(core=="yes") %>% select(-core)
 
 #add in param groupings and remove those without groupings because not important
-param_groups<-read.csv("param.groupings.csv")
-param_groups<-param_groups %>% rename(param=CHARACTERISTIC_NAME)
-lci<-merge(lci,param_groups,by=c('param'),all.x=TRUE)
+param_groups<-read.csv("param.groupings.csv",na.strings=c("","NA"))
+param_groups<-param_groups %>% rename(param=CHARACTERISTIC_NAME) %>% 
+  select(category,param,RSLT_RESULT_SAMPLE_FRACTION,simple) %>% distinct()
+lci<-merge(lci,param_groups,by=c('param','RSLT_RESULT_SAMPLE_FRACTION'),all.x=TRUE)
 lci<-lci %>% filter(!is.na(category))
 
+#add in 2022 proposed sampling
+new<-read.csv("param.groupings.csv",na.strings=c("","NA"))
+new<-new %>% 
+  rename(param=CHARACTERISTIC_NAME) %>% 
+  mutate(year="2022") %>%
+  pivot_longer(    cols = c('DP','OW','BS'),
+    names_to = "info",
+    values_to = "remove",
+    values_drop_na = TRUE) %>% 
+  select(-remove) %>% distinct() %>% 
+  pivot_longer(    cols = c('A','B'),
+    names_to = "class",
+    values_to = "remove",
+    values_drop_na = TRUE) %>% 
+  select(-remove) %>% distinct()
+lci<-merge(lci,new,all=TRUE)
 
 ```
 
@@ -138,7 +155,8 @@ ggplot(salts,
              position = position_dodge(width = 0.25))+
   ggtitle("Other Nutrient Parameters")+
   theme(axis.title.x=element_blank(),
-        axis.title.y=element_blank())
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
 
@@ -168,5 +186,140 @@ ggplot(salts,
              position = position_dodge(width = 0.25))+
   ggtitle("HABs Parameters")+
   theme(axis.title.x=element_blank(),
-        axis.title.y=element_blank())
+        axis.title.y=element_blank(),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+```
+
+## Cost Breakdown
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+costs<-read.csv("reconsidering.parameters.csv",na.strings=c("","NA"))
+costs<-costs %>% 
+  rename(param=CHARACTERISTIC_NAME) %>% 
+  select(category,RSLT_RESULT_SAMPLE_FRACTION,simple,wqs_use,cost,DP,OW,BS,A,B) %>% distinct()
+proposed1<-lci %>% filter(year=="2021",category!="HABs_Parameters") %>% 
+  select(category,simple,RSLT_RESULT_SAMPLE_FRACTION) %>% distinct()
+proposed2<-lci %>% filter(year=="2022",category=="HABs_Parameters") %>% 
+  select(category,simple,RSLT_RESULT_SAMPLE_FRACTION) %>% distinct()
+proposed<-merge(proposed1,proposed2,all=TRUE)
+costs<-merge(proposed,costs,by=c('category','simple','RSLT_RESULT_SAMPLE_FRACTION'),all.x=TRUE)
+
+costs<-costs %>% 
+  mutate(DP=ifelse(DP==1,cost,DP),
+         OW=ifelse(OW==1,cost,OW),
+         BS=ifelse(BS==1,cost,BS),
+         DP=ifelse(is.na(DP),0,DP),
+         OW=ifelse(is.na(OW),0,OW),
+         BS=ifelse(is.na(BS),0,BS),
+         A=ifelse(is.na(A),0,A),
+         B=ifelse(is.na(B),0,B),
+         A_both=ifelse(A==1,DP+OW+BS,0),
+         B_both=ifelse(B==1,DP+OW+BS,0),
+         A_epi=ifelse(A==1,DP+OW,0),
+         B_epi=ifelse(B==1,DP+OW,0)) %>% 
+  select(category,simple,RSLT_RESULT_SAMPLE_FRACTION,wqs_use,A_both,A_epi,B_both,B_epi) %>% distinct()
+wqs_costs21<-costs %>% 
+  group_by(wqs_use) %>% 
+  summarize(add_Ab=sum(A_both),
+            add_Ae=sum(A_epi),
+            add_Bb=sum(B_both),
+            add_Be=sum(B_epi)) %>% 
+  ungroup() %>% 
+  filter(!is.na(wqs_use))
+
+category_costs21<-costs %>% 
+  group_by(category) %>% 
+  summarize(add_Ab=sum(A_both),
+            add_Ae=sum(A_epi),
+            add_Bb=sum(B_both),
+            add_Be=sum(B_epi)) %>% 
+  ungroup()%>% 
+  filter(!is.na(category))
+```
+
+
+Cost breakdown for 2022 proposed sampling parameters
+
+Organized by Designated Use Categories
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+costs<-read.csv("reconsidering.parameters.csv",na.strings=c("","NA"))
+costs<-costs %>% 
+  rename(param=CHARACTERISTIC_NAME) %>% 
+  select(category,RSLT_RESULT_SAMPLE_FRACTION,simple,wqs_use,cost,DP,OW,BS,A,B) %>% distinct()
+proposed<-lci %>% filter(year=="2022") %>% 
+  select(category,simple,RSLT_RESULT_SAMPLE_FRACTION) %>% distinct()
+costs<-merge(proposed,costs,by=c('category','simple','RSLT_RESULT_SAMPLE_FRACTION'),all.x=TRUE)
+
+costs<-costs %>% 
+  mutate(DP=ifelse(DP==1,cost,DP),
+         OW=ifelse(OW==1,cost,OW),
+         BS=ifelse(BS==1,cost,BS),
+         DP=ifelse(is.na(DP),0,DP),
+         OW=ifelse(is.na(OW),0,OW),
+         BS=ifelse(is.na(BS),0,BS),
+         A=ifelse(is.na(A),0,A),
+         B=ifelse(is.na(B),0,B),
+         A_both=ifelse(A==1,DP+OW+BS,0),
+         B_both=ifelse(B==1,DP+OW+BS,0),
+         A_epi=ifelse(A==1,DP+OW,0),
+         B_epi=ifelse(B==1,DP+OW,0)) %>% 
+  select(category,simple,RSLT_RESULT_SAMPLE_FRACTION,wqs_use,A_both,A_epi,B_both,B_epi) %>% distinct()
+wqs_costs<-costs %>% 
+  group_by(wqs_use) %>% 
+  summarize(A_both=sum(A_both),
+            A_epi=sum(A_epi),
+            B_both=sum(B_both),
+            B_epi=sum(B_epi)) %>% 
+  ungroup() %>% 
+  filter(!is.na(wqs_use))
+#add in 2021 costs for comparison
+wqs_costs<-merge(wqs_costs,wqs_costs21,by=c('wqs_use'),all=TRUE)
+wqs_costs<-wqs_costs %>% 
+  replace_na(list(add_Ab=0,add_Ae=0,add_Bb=0,add_Be=0)) %>% 
+  mutate(add_Ab=A_both-add_Ab,
+         add_Ae=A_epi-add_Ae,
+         add_Bb=B_both-add_Bb,
+         add_Be=B_epi-add_Be)  %>% 
+  bind_rows(summarise_all(., ~if(is.numeric(.)) sum(.) else "Total")) %>% 
+  mutate(A_both=ifelse(add_Ab!=0,paste(A_both,"(",add_Ab,")",sep=""),A_both),
+         A_epi=ifelse(add_Ae!=0,paste(A_epi,"(",add_Ae,")",sep=""),A_epi),
+         B_both=ifelse(add_Bb!=0,paste(B_both,"(",add_Bb,")",sep=""),B_both),
+         B_epi=ifelse(add_Be!=0,paste(B_epi,"(",add_Be,")",sep=""),B_epi)) %>% 
+  select(wqs_use,A_both,A_epi,B_both,B_epi) %>% distinct()
+
+DT::datatable(wqs_costs, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
+ 
+```
+
+
+Organized by Parameter Category
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+category_costs<-costs %>% 
+  group_by(category) %>% 
+  summarize(A_both=sum(A_both),
+            A_epi=sum(A_epi),
+            B_both=sum(B_both),
+            B_epi=sum(B_epi)) %>% 
+  ungroup()
+
+#add in 2021 costs for comparison
+category_costs<-merge(category_costs,category_costs21,by=c('category'),all=TRUE)
+category_costs<-category_costs %>% 
+  replace_na(list(add_Ab=0,add_Ae=0,add_Bb=0,add_Be=0)) %>% 
+  mutate(add_Ab=A_both-add_Ab,
+         add_Ae=A_epi-add_Ae,
+         add_Bb=B_both-add_Bb,
+         add_Be=B_epi-add_Be)  %>% 
+  bind_rows(summarise_all(., ~if(is.numeric(.)) sum(.) else "Total")) %>% 
+  mutate(A_both=ifelse(add_Ab!=0,paste(A_both,"(",add_Ab,")",sep=""),A_both),
+         A_epi=ifelse(add_Ae!=0,paste(A_epi,"(",add_Ae,")",sep=""),A_epi),
+         B_both=ifelse(add_Bb!=0,paste(B_both,"(",add_Bb,")",sep=""),B_both),
+         B_epi=ifelse(add_Be!=0,paste(B_epi,"(",add_Be,")",sep=""),B_epi)) %>% 
+  select(category,A_both,A_epi,B_both,B_epi) %>% distinct()
+
+
+DT::datatable(category_costs, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
 ```
