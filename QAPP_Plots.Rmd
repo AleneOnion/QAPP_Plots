@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #  {.tabset}
 
-## Data set
+## Parameter History
 
 plots for the 2022 lci qapp
 
@@ -323,3 +323,7 @@ category_costs<-category_costs %>%
 
 DT::datatable(category_costs, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
 ```
+
+## Cost Breakdown
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
