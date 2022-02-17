@@ -9,9 +9,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #  {.tabset}
 
+plots and tables for the 2022 lci qapp
+
 ## Parameter History
 
-plots for the 2022 lci qapp
 
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 #merging lake id with the DOH ID
@@ -192,7 +193,7 @@ ggplot(salts,
 
 ```
 
-## Cost Breakdown
+## Lab Costs/Sample
 
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 costs<-read.csv("reconsidering.parameters.csv",na.strings=c("","NA"))
@@ -240,9 +241,10 @@ category_costs21<-costs %>%
 ```
 
 
-Cost breakdown for 2022 proposed sampling parameters
+Cost breakdown for 2022 proposed sampling parameters. 
+Values in () are the increase from 2021.
 
-Organized by Designated Use Categories
+Organized by Designated Use Categories. The () indicate the increase from 2021.
 
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 costs<-read.csv("reconsidering.parameters.csv",na.strings=c("","NA"))
@@ -295,7 +297,7 @@ DT::datatable(wqs_costs, extensions = 'Buttons', options = list(dom = 'Bfrtip',b
 ```
 
 
-Organized by Parameter Category
+Organized by Parameter Category. The value in the () indicate the increase from 2021.
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 category_costs<-costs %>% 
   group_by(category) %>% 
@@ -324,6 +326,108 @@ category_costs<-category_costs %>%
 DT::datatable(category_costs, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
 ```
 
-## Cost Breakdown
+## Lab Costs - TOTAL
+
+The following is a budget of lab costs for processing the 2022 samples.
+PLEASE NOTE: there are 6 sites in the probability based sampling list that are tentatively being sampled by CSLAP this year. We are still intending to sample them for LCI because CSLAP's parameter list is not the same. 
 
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+rm(list=setdiff(ls(), c("newdata","category_costs")))
+sites<-read.csv("LCI.Field.Season.sites.csv",na.strings=c("","NA"))
+sites<-sites %>% 
+  filter(!is.na(PURPOSE),
+         PURPOSE!="overdraw_Probability Sampling 2021-2025") %>% 
+  select(PURPOSE,Project,LOCATION_ID,in.CSLAP,X_Coordinate,Y_Coordinate) %>% distinct() %>% 
+  #repeat the one NLA site
+  add_row(PURPOSE="NLA",Project="NLA3",LOCATION_ID="0904LON0301_DH",in.CSLAP=NA,
+          X_Coordinate=-75.06178,Y_Coordinate=44.27153) %>% 
+  mutate(Project=ifelse(Project=="NLA1 and NLA3 (MUST REPEAT)","NLA1",Project),
+         #create a centroid location to get classification next
+         LOCATION_HISTORY_ID=gsub("_DH","_C",LOCATION_ID))
+
+#pull class
+class<-newdata %>% select(LOCATION_HISTORY_ID,LOCATION_WATERBODY_CLASSIFICATION) %>% distinct()
+sites<-merge(sites,class,by=c('LOCATION_HISTORY_ID'),all.x=TRUE)
+#add costs
+sites<-sites %>% 
+  rename(class=LOCATION_WATERBODY_CLASSIFICATION) %>% 
+  mutate(cost=ifelse(grepl("A",class),632,546),
+         cost=ifelse(PURPOSE=="NLA",0,cost),
+         cost=ifelse(PURPOSE=="Probability Sampling 2021-2025",cost+325,cost)) 
+
+sites<-sites %>% 
+  group_by(PURPOSE) %>% 
+  summarize(Number.of.Lakes=n(),
+            Number.of.Events=n(),
+            sample_cost=sum(cost)) %>% 
+  ungroup() 
+
+
+QA<-read.csv("staff.allocations.csv",na.strings=c("","NA"))
+QA<-QA %>% 
+  rename(days=X..days,
+         staff=X..staff.per.team) %>% 
+  filter(!is.na(PURPOSE)) %>% 
+  select(PURPOSE,tripname,lodging,MI.E,Month,days,teams,staff) %>% distinct() %>% 
+  group_by(PURPOSE) %>% 
+  summarize(Num.QA=sum(teams)) %>% 
+  ungroup() %>% 
+  mutate(QA_cost=Num.QA*632) 
+sites<-merge(sites,QA,by=c('PURPOSE'),all=TRUE)
+
+sites<-sites %>%  
+  mutate(cooler_cost=ifelse(PURPOSE=="Probability Sampling 2021-2025",(Number.of.Events/2)*15,0),
+         cooler_cost=ifelse(PURPOSE=="PWS Screening",(Number.of.Events/3)*28,cooler_cost)) %>% 
+  mutate(Total=sample_cost+QA_cost+cooler_cost)%>% 
+  bind_rows(summarise_all(., ~if(is.numeric(.)) sum(.) else "Total"))
+
+ DT::datatable(sites, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
+lab<-sites
+
+```
+
+## Travel Costs
+
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+rm(list=setdiff(ls(), c("newdata","lab","category_costs")))
+sites<-read.csv("staff.allocations.csv",na.strings=c("","NA"))
+sites<-sites %>% 
+  rename(days=X..days,
+         staff=X..staff.per.team) %>% 
+  filter(!is.na(PURPOSE)) %>% 
+  select(PURPOSE,tripname,lodging,MI.E,Month,days,teams,staff) %>% distinct() %>% 
+  mutate(teams=ifelse(staff==4,teams*2,teams),
+         cost=(((2*lodging)+(3*MI.E))*teams*2),
+         cost=ifelse(days==2,((1*lodging)+(2*MI.E))*teams*2,cost)) %>% 
+  group_by(PURPOSE) %>% 
+  summarize(cost=sum(cost)) %>% 
+  ungroup()%>% 
+  bind_rows(summarise_all(., ~if(is.numeric(.)) sum(.) else "Total"))
+
+DT::datatable(sites, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
+travel<-sites
+```
+
+## Totals
+
+It's worth noting that costs are less than predicted. 
+This is in part because we are sampling far fewer events than in 2021 (181 events in 2021 compared to the planned 102 events in 2022). 
+Also, we aren't paying for the NLA lab costs.
+```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+
+travel1<-travel %>% filter(PURPOSE=="Total") %>% distinct() %>% select(PURPOSE,cost)
+travel1<-travel1 %>% rename(Travel=cost)
+lab1<-lab %>% filter(PURPOSE=="Total") %>% distinct() %>% select(PURPOSE,Total) %>% distinct()
+lab1<-lab1 %>% rename(Lab=Total)
+total<-merge(travel1,lab1,by=c('PURPOSE'))
+total<-total %>% 
+  rename(Costs=PURPOSE) %>% 
+  mutate(Supplies=6000,
+         Equipment=20000,
+         Total=Lab+Travel+Supplies+Equipment) %>% 
+  gather(Category,cost) %>% 
+  filter(Category!="Costs") 
+
+DT::datatable(total, extensions = 'Buttons', options = list(dom = 'Bfrtip',buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
+
+```
