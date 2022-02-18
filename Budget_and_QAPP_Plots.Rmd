@@ -21,7 +21,9 @@ The purpose of this document is to generate plots demonstrating the LCI paramete
 library(tidyverse)
 rm(list=setdiff(ls(), c("newdata")))
 # setwd("C:/Users/leneo/Dropbox/Alene/Rscripts/Current")
+# setwd("C:/Users/amonion/New York State Office of Information Technology Services/BWAM - Lakes Database/Current")
 # source("new_database/Reading.LMAS.Data.R")
+# setwd("C:/Users/amonion/OneDrive - New York State Office of Information Technology Services/Rscripts/QAPP_Plots")
 # setwd("C:/Users/leneo/Dropbox/Alene/Rscripts/QAPP_Plots")
 
 lci<-newdata %>% filter(DATA_PROVIDER=="LCI",
@@ -88,6 +90,8 @@ ggplot(salts,
 
 ```
 
+
+It's important to note that we are collecting Iron Magnesium and Manganese in all waters (class A and B) even though there's only wqs for water supply use. This is because we started the 5 year random probabilistic sampling before we added dissolved metals. Once that 5 year period is up, we will not be able to summarize dissolved metals statewide so the total values are a temporary proxy. We should remove iron, magnesium, and manganese after this 5 year cycle is up.
 ```{r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 salts<-lci %>% filter(category=="Metals",
                       RSLT_RESULT_SAMPLE_FRACTION=="TOTAL") %>% 

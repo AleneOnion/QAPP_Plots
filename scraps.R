@@ -23,3 +23,6 @@ junk<-newdata %>%
                          INFORMATION_TYPE %in% c("OW","BS"),
          substr(SAMPLE_DATE,1,4)=="2021") %>% 
   select(LOCATION_HISTORY_ID,SAMPLE_DATE) %>% distinct()
+
+newdata %>% filter(DATA_PROVIDER=="CSL",SAMPLE_TYPE=="WATER COLUMN",substr(SAMPLE_DATE,1,4)=="2020") %>% 
+  select(CHARACTERISTIC_NAME) %>% distinct() %>% arrange(CHARACTERISTIC_NAME)
